@@ -1,21 +1,39 @@
-CXX = g++
-CXXFLAGS = -std=c++11
-TARGET = adventure
-SOURCES = main.cpp LinkedList.cpp Room.cpp Player.cpp Weapon.cpp Enemy.cpp
-OBJECTS = $(SOURCES:.cpp=.o)
 
-all: $(TARGET)
+#include "Player.h"
 
-$(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS)
+Player::Player(string name, int health)
+    : name(name), health(health), currentWeapon("Fists", 5) {
+}
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+string Player::getName() const {
+    return name;
+}
 
-run: $(TARGET)
-	./$(TARGET)
+int Player::getHealth() const {
+    return health;
+}
 
-clean:
-	rm -f $(OBJECTS) $(TARGET)
+void Player::addItem(string item) {
+    inventory.push_back(item);
+    cout << item << " added to inventory.\n";
+}
 
-.PHONY: all run clean
+void Player::showInventory() const {
+    cout << "Inventory:\n";
+
+    if (inventory.empty()) {
+        cout << "No items collected.\n";
+    } else {
+        for (const auto& item : inventory) {
+            cout << "- " << item << endl;
+        }
+    }
+}
+
+void Player::setWeapon(const Weapon& weapon) {
+    currentWeapon = weapon;
+}
+
+Weapon Player::getWeapon() const {
+    return currentWeapon;
+}

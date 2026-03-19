@@ -1,38 +1,28 @@
-#include "Player.h"
 
-Player::Player(string name, int health)
-    : name(name), health(health), currentWeapon("Fists", 5) {
-}
+#ifndef PLAYER_H
+#define PLAYER_H
 
-string Player::getName() const {
-    return name;
-}
+#include <string>
+#include <vector>
+#include <iostream>
+#include "Weapon.h"
+using namespace std;
 
-int Player::getHealth() const {
-    return health;
-}
+class Player {
+private:
+    string name;
+    int health;
+    vector<string> inventory;
+    Weapon currentWeapon;
 
-void Player::addItem(string item) {
-    inventory.push_back(item);
-    cout << item << " added to inventory.\n";
-}
+public:
+    Player(string name, int health);
+    string getName() const;
+    int getHealth() const;
+    void addItem(string item);
+    void showInventory() const;
+    void setWeapon(const Weapon& weapon);
+    Weapon getWeapon() const;
+};
 
-void Player::showInventory() const {
-    cout << "Inventory:\n";
-
-    if (inventory.empty()) {
-        cout << "No items collected.\n";
-    } else {
-        for (const auto& item : inventory) {
-            cout << "- " << item << endl;
-        }
-    }
-}
-
-void Player::setWeapon(const Weapon& weapon) {
-    currentWeapon = weapon;
-}
-
-Weapon Player::getWeapon() const {
-    return currentWeapon;
-}
+#endif
